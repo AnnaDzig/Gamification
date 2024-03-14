@@ -28,27 +28,25 @@ const GamificationElephant = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/1.png')} style={styles.elephant} />
+      <Image source={require('../assets/elephant.png')} style={styles.elephant} />
       <View style={styles.accessoriesContainer}>
-        {accessories.map((accessory, index) => (
-          <Image
-            key={index}
-            source={accessory.image}
-            style={[
-              styles.accessory,
-              { opacity: accessory.added ? 1 : 0 },
-              accessory.id === 'hat' && styles.hat,
-              accessory.id === 'fishingRod' && styles.fishingRod,
-              accessory.id === 'necklace' && styles.necklace,
-              accessory.id === 'pumpkin' && styles.pumpkin,
-              accessory.id === 'fishingRod1' && styles.fishingRod1,
-              accessory.id === 'necklace1' && styles.necklace1,
-              accessory.id === 'hat2' && styles.hat2,
-              accessory.id === 'fishingRod2' && styles.fishingRod2,
-              accessory.id === 'necklace2' && styles.necklace2,
-            ]}
-          />
-        ))}
+        {accessories
+          .filter((accessory) => accessory.added)
+          .map((accessory, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => toggleAccessory(accessory.id)}
+              style={[
+                styles[accessory.id],
+                { position: 'absolute', opacity: accessory.added ? 1 : 0 },
+              ]}
+            >
+              <Image
+                source={accessory.image}
+                style={{ width: '100%', height: '100%' }}
+              />
+            </TouchableOpacity>
+          ))}
       </View>
       <View style={styles.buttonsContainer}>
         {accessories.map((accessory, index) => (
@@ -63,17 +61,15 @@ const GamificationElephant = () => {
   );
 };
 
-
 const styles = StyleSheet.create({
-
   container: {
     flexDirection: 'row',
-    flexWrap: 'wrap', 
-    justifyContent: 'space-around', 
-    width: '100%', 
-    marginTop: 20, 
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: 20,
   },
- elephant: {
+  elephant: {
     width: 300,
     height: 400,
     borderWidth: 1,
@@ -152,13 +148,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    gap: '20',
+    gap: 20,
     width: '70%',
     marginTop: 20,
   },
   button: {
     borderWidth: 1,
-    borderRadius: '10',
+    borderRadius: 10,
     width: 70,
     height: 70,
   },

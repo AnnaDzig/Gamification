@@ -28,27 +28,25 @@ const GamificationLion = () => {
 
   return (
     <View style={styles.container}>
-      <Image source={require('../assets/2.png')} style={styles.lion} />
+      <Image source={require('../assets/lion.png')} style={styles.lion} />
       <View style={styles.accessoriesContainer}>
-        {accessories.map((accessory, index) => (
-          <Image
-            key={index}
-            source={accessory.image}
-            style={[
-              styles.accessory,
-              { opacity: accessory.added ? 1 : 0 },
-              accessory.id === 'hat' && styles.hat,
-              accessory.id === 'fishingRod' && styles.fishingRod,
-              accessory.id === 'necklace' && styles.necklace,
-              accessory.id === 'pumpkin' && styles.pumpkin,
-              accessory.id === 'fishingRod1' && styles.fishingRod1,
-              accessory.id === 'necklace1' && styles.necklace1,
-              accessory.id === 'hat2' && styles.hat2,
-              accessory.id === 'fishingRod2' && styles.fishingRod2,
-              accessory.id === 'necklace2' && styles.necklace2,
-            ]}
-          />
-        ))}
+        {accessories
+          .filter((accessory) => accessory.added)
+          .map((accessory, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => toggleAccessory(accessory.id)}
+              style={[
+                styles[accessory.id],
+                { position: 'absolute', opacity: accessory.added ? 1 : 0 },
+              ]}
+            >
+              <Image
+                source={accessory.image}
+                style={{ width: '100%', height: '100%' }}
+              />
+            </TouchableOpacity>
+          ))}
       </View>
       <View style={styles.buttonsContainer}>
         {accessories.map((accessory, index) => (
@@ -63,15 +61,13 @@ const GamificationLion = () => {
   );
 };
 
-// Add your styles here
 const styles = StyleSheet.create({
-  // styles go here
   container: {
-    flexDirection: 'row', // Lay out children in a row
-    flexWrap: 'wrap', // Allow items to wrap to the next line
-    justifyContent: 'space-around', // Distribute extra space around items
-    width: '100%', // Set the width to take up 100% of the parent container
-    marginTop: 20, // Space above the buttons container
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: 20,
   },
   lion: {
     width: 300,
